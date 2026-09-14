@@ -14,6 +14,9 @@ class OnboardingScreens extends StatefulWidget {
 }
 
 class _OnboardingScreensState extends State<OnboardingScreens> {
+  //boolean making  for going to detail filling form
+  bool showDetailsPage = false;
+
   final PageController _controller = PageController();
 
   @override
@@ -25,8 +28,16 @@ class _OnboardingScreensState extends State<OnboardingScreens> {
           Expanded(
             child: Stack(
               children: [
+                //changing the pages like a slide show
                 PageView(
-                  controller: _controller,
+                  controller:
+                      _controller, //this is the parameter helps to change the pages
+                  onPageChanged: (index) {
+                    setState(() {
+                      //make the showDetailsPage index as true when change the state as index 3, last page
+                      showDetailsPage = index == 3;
+                    });
+                  },
                   children: [
                     FrontPage(),
 
@@ -39,14 +50,14 @@ class _OnboardingScreensState extends State<OnboardingScreens> {
 
                     SharedOnboardingScreens(
                       title: OnboardingData.onBoardingList[1].title,
-                      imagePath: OnboardingData.onBoardingList[1].imagePath,
+                      imagePath: OnboardingData.onBoardingList[2].imagePath,
                       description:
                           OnboardingData.onBoardingList[1].imageDescriptoin,
                     ),
 
                     SharedOnboardingScreens(
                       title: OnboardingData.onBoardingList[2].title,
-                      imagePath: OnboardingData.onBoardingList[2].imagePath,
+                      imagePath: OnboardingData.onBoardingList[1].imagePath,
                       description:
                           OnboardingData.onBoardingList[2].imageDescriptoin,
                     ),
@@ -81,8 +92,9 @@ class _OnboardingScreensState extends State<OnboardingScreens> {
                           curve: Curves.easeInOut,
                         );
                       },
+
                       child: CustomeButtton(
-                        buttonName: "Next",
+                        buttonName: showDetailsPage ? "Get Started" : "Next",
                         buttonColor: kMainColor,
                       ),
                     ),
