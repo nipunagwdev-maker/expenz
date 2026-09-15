@@ -1,4 +1,5 @@
 import 'package:expense_master_proj_07/constants/colors/colors.dart';
+import 'package:expense_master_proj_07/screens/user_data_screen.dart';
 import 'package:expense_master_proj_07/widget/custome_buttton.dart';
 import 'package:flutter/material.dart';
 import 'package:expense_master_proj_07/data/onboarding_data.dart';
@@ -61,6 +62,8 @@ class _OnboardingScreensState extends State<OnboardingScreens> {
                       description:
                           OnboardingData.onBoardingList[2].imageDescriptoin,
                     ),
+
+                    UserDataScreen(),
                   ],
                 ),
 
@@ -84,20 +87,41 @@ class _OnboardingScreensState extends State<OnboardingScreens> {
                   right: 0,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: GestureDetector(
-                      onTap: () {
-                        _controller.animateToPage(
-                          _controller.page!.toInt() + 1,
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.easeInOut,
-                        );
-                      },
+                    child: !showDetailsPage
+                        ? GestureDetector(
+                            onTap: () {
+                              _controller.animateToPage(
+                                _controller.page!.toInt() + 1,
+                                duration: const Duration(milliseconds: 400),
+                                curve: Curves.easeInOut,
+                              );
+                            },
 
-                      child: CustomeButtton(
-                        buttonName: showDetailsPage ? "Get Started" : "Next",
-                        buttonColor: kMainColor,
-                      ),
-                    ),
+                            child: CustomeButtton(
+                              buttonName: showDetailsPage
+                                  ? "Get Started"
+                                  : "Next",
+                              buttonColor: kMainColor,
+                            ),
+                          )
+                        : GestureDetector(
+                            onTap: () {
+                              //navigation to user data page
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => UserDataScreen(),
+                                ),
+                              );
+                            },
+
+                            child: CustomeButtton(
+                              buttonName: showDetailsPage
+                                  ? "Get Started"
+                                  : "Next",
+                              buttonColor: kMainColor,
+                            ),
+                          ),
                   ),
                 ),
               ],
